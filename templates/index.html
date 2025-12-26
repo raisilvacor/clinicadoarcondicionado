@@ -270,6 +270,8 @@
             box-shadow: 0 15px 40px rgba(255, 140, 0, 0.3);
             border: 3px solid #ff8c00;
             background: #000000;
+            position: relative;
+            min-height: 300px;
         }
 
         .about-video {
@@ -277,6 +279,22 @@
             height: auto;
             display: block;
             border-radius: 12px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .about-video.loaded {
+            opacity: 1;
+        }
+
+        .video-loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #ff8c00;
+            font-size: 1.2rem;
+            z-index: 10;
         }
 
         /* Tipos de Ar Condicionado */
@@ -660,10 +678,13 @@
                 </ul>
             </div>
             <div class="about-image">
-                <video class="about-video" autoplay loop playsinline>
+                <video class="about-video" loop playsinline muted preload="metadata" poster="">
                     <source src="{{ content.about.video if content and content.about and content.about.video else '/static/videos/iphone.mp4' }}" type="video/mp4">
                     Seu navegador não suporta vídeos HTML5.
                 </video>
+                <div class="video-loading" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #ff8c00; font-size: 1.2rem;">
+                    Carregando vídeo...
+                </div>
             </div>
         </div>
     </section>
@@ -807,16 +828,55 @@
             observer.observe(card);
         });
 
-        // Configurar vídeo para autoplay com áudio
+        // Configurar vídeo com carregamento otimizado
         const video = document.querySelector('.about-video');
+        const videoLoading = document.querySelector('.video-loading');
+        
         if (video) {
-            video.muted = false;
-            video.play().catch(error => {
-                // Se autoplay com áudio for bloqueado, tenta tocar quando o usuário interagir com a página
-                document.addEventListener('click', function playVideoOnce() {
-                    video.play();
-                    document.removeEventListener('click', playVideoOnce);
-                }, { once: true });
+            // Carregar vídeo apenas quando a seção estiver visível
+            const videoObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const videoElement = entry.target;
+                        
+                        // Mostrar indicador de carregamento
+                        if (videoLoading) videoLoading.style.display = 'block';
+                        
+                        // Carregar o vídeo
+                        videoElement.load();
+                        
+                        // Quando os dados estiverem prontos, iniciar reprodução
+                        videoElement.addEventListener('loadeddata', function() {
+                            if (videoLoading) videoLoading.style.display = 'none';
+                            videoElement.classList.add('loaded');
+                            
+                            // Tentar reproduzir
+                            videoElement.play().catch(error => {
+                                console.log('Autoplay bloqueado, aguardando interação do usuário');
+                                // Se autoplay for bloqueado, tenta tocar quando o usuário interagir
+                                document.addEventListener('click', function playVideoOnce() {
+                                    videoElement.play();
+                                    document.removeEventListener('click', playVideoOnce);
+                                }, { once: true });
+                            });
+                        }, { once: true });
+                        
+                        // Parar de observar após carregar
+                        videoObserver.unobserve(videoElement);
+                    }
+                });
+            }, {
+                rootMargin: '50px' // Começar a carregar 50px antes da seção ficar visível
+            });
+            
+            videoObserver.observe(video);
+            
+            // Tratamento de erro de carregamento
+            video.addEventListener('error', function() {
+                if (videoLoading) {
+                    videoLoading.textContent = 'Erro ao carregar vídeo';
+                    videoLoading.style.color = '#dc3545';
+                }
             });
         }
     </script>
