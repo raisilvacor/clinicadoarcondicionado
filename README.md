@@ -1,6 +1,6 @@
-# Assistência Técnica de Celulares - TechCell
+# Instalação e Manutenção de Ar Condicionado
 
-Página web profissional para assistência técnica de celulares Android e iPhone com painel administrativo completo.
+Página web profissional para serviços de instalação, manutenção e reparo de ar condicionado com painel administrativo completo.
 
 ## Características
 
@@ -50,7 +50,7 @@ python app.py
 │       ├── services.html
 │       ├── about.html
 │       ├── devices.html
-│       ├── laboratory.html
+│       ├── laboratory.html (Oficina)
 │       ├── contact.html
 │       └── password.html
 ├── static/            # Arquivos estáticos
@@ -66,10 +66,10 @@ O painel administrativo permite gerenciar completamente o conteúdo do site:
 ### Funcionalidades:
 
 1. **Hero Section** - Editar título, subtítulo, botão e imagem de fundo
-2. **Serviços** - Adicionar, editar e remover serviços
+2. **Serviços** - Adicionar, editar e remover serviços de instalação, manutenção e reparo
 3. **Sobre** - Editar informações sobre a empresa e características
-4. **Dispositivos** - Gerenciar módulos Android, iPhone e MAC
-5. **Laboratório** - Gerenciar imagens da galeria
+4. **Tipos de Ar Condicionado** - Gerenciar tipos de ar condicionado (Split Tradicional, Split Inverter, Multi Split)
+5. **Oficina** - Gerenciar imagens da galeria da oficina
 6. **Contato** - Editar telefones, e-mails, endereço e horários
 7. **Senha** - Alterar senha de acesso ao painel
 

@@ -5,7 +5,7 @@
 {% block content %}
 <div class="admin-card">
     <h2>⚙️ Gerenciar Serviços</h2>
-    <p>Adicione, edite ou remova os serviços oferecidos pela assistência técnica.</p>
+    <p>Adicione, edite ou remova os serviços de instalação, manutenção e reparo de ar condicionado.</p>
 
     <form method="POST" style="margin-bottom: 2rem;">
         <input type="hidden" name="action" value="add">
@@ -13,12 +13,12 @@
         
         <div class="form-group">
             <label for="icon">Ícone (emoji ou código):</label>
-            <input type="text" id="icon" name="icon" placeholder="📱" required>
+            <input type="text" id="icon" name="icon" placeholder="🔧" required>
         </div>
 
         <div class="form-group">
             <label for="title">Título do Serviço:</label>
-            <input type="text" id="title" name="title" placeholder="Troca de Tela" required>
+            <input type="text" id="title" name="title" placeholder="Instalação" required>
         </div>
 
         <div class="form-group">
@@ -65,7 +65,6 @@
                 <input type="hidden" name="action" value="delete">
                 <input type="hidden" name="index" value="{{ loop.index0 }}">
                 <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir este serviço?')">Excluir</button>
-            </form>
             </form>
         </div>
         {% endfor %}

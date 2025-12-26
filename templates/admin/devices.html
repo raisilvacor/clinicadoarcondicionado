@@ -1,19 +1,19 @@
 {% extends "admin/base.html" %}
 
-{% block title %}Gerenciar Dispositivos{% endblock %}
+{% block title %}Gerenciar Tipos de Ar Condicionado{% endblock %}
 
 {% block content %}
 <div class="admin-card">
-    <h2>📱 Gerenciar Dispositivos</h2>
-    <p>Adicione, edite ou remova os módulos de dispositivos (Android, iPhone, MAC).</p>
+    <h2>❄️ Gerenciar Tipos de Ar Condicionado</h2>
+    <p>Adicione, edite ou remova os tipos de ar condicionado (Split, Janela, Portátil).</p>
 
     <form method="POST" style="margin-bottom: 2rem;">
         <input type="hidden" name="action" value="add">
-        <h3 style="color: #ff8c00; margin-bottom: 1rem;">➕ Adicionar Novo Dispositivo</h3>
+        <h3 style="color: #ff8c00; margin-bottom: 1rem;">➕ Adicionar Novo Tipo</h3>
         
         <div class="form-group">
-            <label for="name">Nome do Dispositivo:</label>
-            <input type="text" id="name" name="name" placeholder="Android" required>
+            <label for="name">Nome do Tipo:</label>
+            <input type="text" id="name" name="name" placeholder="Split Tradicional" required>
         </div>
 
         <div class="form-group">
@@ -27,10 +27,10 @@
             <textarea id="description" name="description" required></textarea>
         </div>
 
-        <button type="submit" class="btn btn-primary">Adicionar Dispositivo</button>
+        <button type="submit" class="btn btn-primary">Adicionar Tipo</button>
     </form>
 
-    <h3 style="color: #ff8c00; margin-bottom: 1rem;">📋 Dispositivos Existentes</h3>
+    <h3 style="color: #ff8c00; margin-bottom: 1rem;">📋 Tipos Existentes</h3>
     
     <div class="items-list">
         {% for device in devices %}
@@ -66,7 +66,7 @@
             <form method="POST" style="margin-top: 0.5rem;">
                 <input type="hidden" name="action" value="delete">
                 <input type="hidden" name="index" value="{{ loop.index0 }}">
-                <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir este dispositivo?')">Excluir</button>
+                <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir este tipo?')">Excluir</button>
             </form>
         </div>
         {% endfor %}
